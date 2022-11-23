@@ -28,6 +28,7 @@ If those instructionsa are unclear and you don't know any programming language /
 
 ## Pre-hosted
 [Discord Bot](https://discord.com/oauth2/authorize?client_id=1043178767037775883&permissions=539089042752&scope=applications.commands%20bot)
+
 [Discord Support Server (space Hub)](https://discord.gg/qZa94Rzymd)
 
 ## Notice
