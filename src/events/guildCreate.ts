@@ -15,8 +15,11 @@ const event : BotEvent = {
             .setDescription('I started a mission in ' + guild.name)
             .setAuthor({name:owner.displayName, iconURL: owner.displayAvatarURL.toString()})
         const staffChannel = await guild.client.channels.fetch(process.env.STAFF_CHANNEL_ID as string) as TextChannel
-
+        try {
             await staffChannel.send({embeds:[embed]})
+        } catch (error) {
+            await staffChannel.send("I joined " + guild.name)
+        }
     }
 
 }

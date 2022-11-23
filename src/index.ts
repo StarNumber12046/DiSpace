@@ -1,18 +1,28 @@
-import { Client, GatewayIntentBits, Collection} from "discord.js";
-const { Guilds, MessageContent, GuildMessages, GuildMembers } = GatewayIntentBits
-const client = new Client({intents:[Guilds, MessageContent, GuildMessages, GuildMembers]})
+import { Client, GatewayIntentBits, Collection } from "discord.js";
+const { Guilds, MessageContent, GuildMessages, GuildMembers } =
+  GatewayIntentBits;
 import { Command, SlashCommand } from "./types";
 import { config } from "dotenv";
 import { readdirSync } from "fs";
 import { join } from "path";
-config()
 
-client.slashCommands = new Collection<string, SlashCommand>()
-client.cooldowns = new Collection<string, number>()
+const client = new Client({
+  intents: [Guilds, MessageContent, GuildMessages, GuildMembers],
+  presence: {
+    status: "online",
+    activities: [{ name: "space", type: 5 }],
+    afk: true,
+  },
+  ws: { properties: { browser:"Discord iOS" }}
+});
+config();
 
-const handlersDir = join(__dirname, "./handlers")
-readdirSync(handlersDir).forEach(handler => {
-    require(`${handlersDir}/${handler}`)(client)
-})
+client.slashCommands = new Collection<string, SlashCommand>();
+client.cooldowns = new Collection<string, number>();
 
-client.login(process.env.TOKEN)
+const handlersDir = join(__dirname, "./handlers");
+readdirSync(handlersDir).forEach((handler) => {
+  require(`${handlersDir}/${handler}`)(client);
+});
+
+client.login(process.env.TOKEN);

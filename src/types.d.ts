@@ -1,10 +1,10 @@
-import { SlashCommandBuilder, CommandInteraction, Collection, PermissionResolvable, Message } from "discord.js"
-import mongoose from "mongoose"
+import { SlashCommandBuilder, CommandInteraction, Collection, PermissionResolvable, Message, AutocompleteInteraction } from "discord.js"
 
 export interface SlashCommand {
     command: SlashCommandBuilder | any,
     execute: (interaction : CommandInteraction) => void,
-    cooldown?: number // in seconds
+    cooldown?: number // in seconds,
+    autocomplete?: (interaction : AutocompleteInteraction) => void
 }
 
 export interface Command {
@@ -14,18 +14,6 @@ export interface Command {
     aliases: Array<string>,
     cooldown?: number,
 }
-
-interface GuildOptions {
-    prefix: string,
-}
-
-export interface IGuild extends mongoose.Document {
-    guildID: string,
-    options: GuildOptions
-    joinedAt: Date
-}
-
-export type GuildOption = keyof GuildOptions
 export interface BotEvent {
     name: string,
     once?: boolean | false,
@@ -37,9 +25,9 @@ declare global {
         interface ProcessEnv {
             TOKEN: string,
             CLIENT_ID: string,
-            PREFIX: string,
-            MONGO_URI: string,
-            MONGO_DATABASE_NAME: string
+            NASA_API_KEY:string,
+            SUPPORT_URL:string,
+            STAFF_CHANNEL_ID:string
         }
     }
 }
